@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Service extends Model
 {
@@ -16,11 +16,9 @@ class Service extends Model
         'image',
     ];
 
-    //Um serviço pode estar em vários agendamentos
-    public function appointments(): BelongsToMany
+    //Um serviço pode ter vários agendamentos.
+    public function appointments(): HasMany
     {
-        return $this->belongsToMany(Appointment::class)
-                    ->withPivot('price')
-                    ->withTimestamps();
+        return $this->hasMany(Appointment::class);
     }
 }

@@ -12,6 +12,7 @@ class Appointment extends Model
     protected $fillable =[
         'user_id',
         'client_id',
+        'service_id',
         'start_time',
         'end_time',
         'total_price',
@@ -40,12 +41,11 @@ class Appointment extends Model
     }
     
 
-    //Um agendamento pode ter vários serviços.
-    public function services(): BelongsToMany
+    //Um agendamento pertence a um serviço.
+    public function services(): BelongsTo
     {
-        return $this->belongsToMany(Service::class)
-                    ->withPivot('price')
-                    ->withTimestamps();
+        return $this->belongsTo(Service::class);
+
     }
 
 

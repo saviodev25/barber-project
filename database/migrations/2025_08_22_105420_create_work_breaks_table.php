@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointment_services', function (Blueprint $table) {
+        Schema::create('work_breaks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade');
-            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-            $table->decimal('price', 8, 2)->nullable();
+            $table->string('name');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedTinyInteger('day_of_week'); // 0=Dom ... 6=Sáb
+            $table->time('start_time');
+            $table->time('end_time');
+            
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointment_services');
+        Schema::dropIfExists('work_breaks');
     }
 };

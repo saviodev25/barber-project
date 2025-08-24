@@ -15,15 +15,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
-            
+            $table->foreignId('service_id')->constrained('services')->onDelete('set null');
             $table->dateTime('start_time')->nullable(false);
             $table->dateTime('end_time')->nullable(false);
 
             $table->decimal('total_price', 8, 2)->nullable();
-            $table->enum('status', ['scheduled', 'complet', 'canceled'])->default('scheduled');
-            
+            $table->enum('status', ['scheduled', 'completed', 'cancelled'])->default('scheduled');
             $table->text('notes')->nullable();
+
+            $table->enum('source', ['online', 'offline'])->default('online');
             
+            $table->unique(['user_id', 'start_time']);
             $table->timestamps();
         });
     }
