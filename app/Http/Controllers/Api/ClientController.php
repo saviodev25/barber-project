@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Client\StoreClientRequest;
 use App\Http\Requests\Api\Client\UpdateClientRequest;
 use App\Models\Client;
-use GuzzleHttp\Psr7\Request;
+
 use Illuminate\Http\JsonResponse;
 
 
@@ -33,7 +33,6 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request): JsonResponse
     {
         $validateData = $request->validated();
-        
         $client = Client::create($validateData);
         
         return response()->json($client, 201);

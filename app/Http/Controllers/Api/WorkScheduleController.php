@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\WorkSchedule\StoreWorkScheduleRequest;
+use App\Http\Requests\Api\WorkSchedule\UpdateWorkScheduleRequest;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 
@@ -32,24 +33,36 @@ class WorkScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $workSchedule = WorkSchedule::find($id);
+        return response()->json($workSchedule);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateWorkScheduleRequest $request, WorkSchedule $workSchedule)
     {
-        //
+        $validated = $request->validated();
+        $workSchedule->update($validated);
+
+        return response()->json($workSchedule);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $workSchedule = WorkSchedule::findOrFail($id);
+        $workSchedule->delete();
+        
+        return response()->json(
+            [
+                'message' => 'Work Schedule removido com sucesso',
+                'work_schedule' => $workSchedule
+            ]
+        );
     }
 }

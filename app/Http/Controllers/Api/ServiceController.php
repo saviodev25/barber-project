@@ -53,7 +53,8 @@ class ServiceController extends Controller
         return response()->json(
             [
                 'status' => 'ok',
-                'mensagem' => 'Serviço atualizado com sucesso.'
+                'mensagem' => 'Serviço atualizado com sucesso.',
+                'dados' => $service
             ]
         );
     }
@@ -64,7 +65,7 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         $serviceId = Service::findOrFail($id);
-        $serviceId->destroy();
+        $serviceId->delete();
         return response()->json(
             [
                 'status' => 'ok',
